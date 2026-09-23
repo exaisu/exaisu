@@ -1,17 +1,12 @@
+html {
+    overflow-y: scroll;
+}
 body{
     font-family:'basiic';
     font-size:16px;
     background-color:black;
     font-weight: 300;
     text-shadow:var(--body-text-shadow);
-}
-h1{
-    color:#ffff;
-    font-family:'basiic';
-    font-size:16px;
-    font-style: light;
-    margin:0;
-    text-shadow:var(--green-text-shadow)
 }
 h2{
     color:#018281;
@@ -38,6 +33,27 @@ h4{
     margin:0;
     text-shadow:var(--green-text-shadow)
 }
+/* ------- Sections ------- */
+
+section {
+    display: none;
+    width: 100%;
+    background: var(--bgcolor);
+  }
+  
+  section:target { /* Show section */
+    display: block;
+  }
+
+  /* Show #home by default (no hash / on load) */
+  section#home {
+    display: block;
+  }
+
+  /* ...but hide it again if a different section is the active target */
+  body:has(section:target:not(#home)) section#home {
+    display: none;
+  }
 @font-face {
     font-family: 'basiic';
     src: url(/font/basiic.ttf);
@@ -62,25 +78,29 @@ a{
             text-shadow:var(--firefox-green-shadow)!important
         }
     }
-    body:before{
-        content:"";
-        position:fixed;
-        opacity:.2;
-        left:0;
-        top:0;
-        width:100%;
-        height:100%;
-        pointer-events:none;
-        z-index:1000;
-        background-image:url(/images/smokeyblue.gif);
-        background-repeat:all;
-        background-position:0 0;
-        box-shadow:inset 0 0 10em rgb(0 0 0/40%)
-    }
 }
-#container,#backside-container{
-    width:900px;
+body:before{
+    content:"";
+    position:fixed;
+    opacity:.2;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:1000;
+    background-image:url(/images/smokeyblue.gif);
+    background-repeat:all;
+    background-position:0 0;
+    box-shadow:inset 0 0 10em rgb(0 0 0/40%)
+}
+#container{
+    width:800px;
     margin:0 auto
+}
+#container > table {
+    table-layout: fixed;
+    width: 900px;
 }
 #statuscafe {
     padding: .15em;
@@ -93,9 +113,9 @@ a{
   }
 #skins {
     position: relative;
-    width: 12%;
+    width: 72px;
     right: 48px;
-    margin-top: -70;
+    bottom: 70px;
 ;
 }
 #statuscafe-username {
@@ -104,11 +124,17 @@ a{
 
 #maintd{
     width:675px;
-    vertical-align:baseline
+    vertical-align:baseline;
+    position: relative;
 }
 #menutd{
     width:225px;
     vertical-align:baseline
+}
+#buttons{
+    width:900px;
+    max-width:100%;
+    margin:0 auto;
 }
 .box{
     background-color:#081b2091;
@@ -118,13 +144,18 @@ a{
     padding:10px 15px;
     margin:5px
 }
+.zpbox{
+    background-color:#081b2091;
+    border:4px solid #173e49c5;
+    border-radius:8px;
+    color:#fff;
+    padding:8px 8px;
+    margin:5px
+}
 .navlink{
     color:#fff;
     display:inline-block;
     margin-bottom:3px
-}
-.centerbox{
-    text-align:center
 }
 ::-webkit-scrollbar{
     width:8px
@@ -140,38 +171,10 @@ a{
     background-color:#1f1f1f;
     outline:1px solid #297c5c
 }
-footer{
-    text-align:center;
-    color:#fff
-}
-#musicbox{
-    height:60px
-}
-#albumcover{
-    border:1px solid #383838;
-    float:left;
-    margin-right:10px
-}
-#songname{
-    display:table-cell;
-    width:115px
-}
-#artist{
-    overflow-wrap:anywhere;
-    max-height:35px;
-    text-overflow:ellipsis;
-    display:grid;
-    overflow:hidden
-}
-#songlink{
-    color:white;
-    text-decoration:none
-}
 #pfp{
     float:left;
     border:3px solid #018281;
     margin:15px 15px 5px 0px;
-    width:100px;
     height:94px
 }
 .lastfm-widget {
@@ -190,4 +193,64 @@ footer{
 .lastfm-title {
 	font-size: 0.7rem;
 	margin-bottom: 0.2rem;
+}
+
+/* ------- Mobile ------- */
+@media screen and (max-width: 900px) {
+    #container {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    /* Turn the layout table into a single stacked column */
+    table, tbody, tr, td {
+        display: block;
+        width: 100% !important;
+    }
+
+    #maintd, #menutd, #buttons {
+        width: 100% !important;
+        max-width: 100%;
+        box-sizing: border-box;
+        padding: 0;
+    }
+
+    #menutd {
+        max-width: 100% !important;
+    }
+
+#mcrender {
+    position: relative;
+    width: 120px;
+    right: 79px;
+  }
+#skins {
+    position: relative;
+    width: 72px;
+    right: 48px;
+    bottom: 70px;
+}
+
+    .box {
+        margin: 5px 0;
+    }
+
+    /* Let the webring/88x31 button row wrap instead of overflowing */
+    div > img[src^="/88x31/"] {
+        max-width: 88px;
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    body {
+        font-size: 14px;
+    }
+    #pfp {
+        width: 80px;
+        height: 75px;
+    }
 }
